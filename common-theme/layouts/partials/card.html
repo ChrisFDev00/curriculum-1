@@ -4,6 +4,14 @@
   {{ with .Page.Description }}
     <p class="c-card__description">{{ . }}</p>
   {{ end }}
+  {{ if .Page.Params.Prerequisites }}
+  <ul class="c-card__prereqs">
+    {{ range .Page.Params.Prerequisites }}
+      <li class="c-card__prereq">{{ . }}</li>
+    {{ end }}
+  </ul>
+  </p>
+  {{ end }}
   <!-- Display emoji -->
   <div class="c-card__image c-emoji">
     {{ .Page.Params.emoji | default "🤖" }}

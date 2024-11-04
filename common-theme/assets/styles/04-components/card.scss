@@ -42,6 +42,9 @@
       animation: text-appear cubic-bezier(0.25, 1.375, 0.25, 1) 0.5s forwards;
     }
   }
+  &__prereqs {
+    // TODO: Style this nicely
+  }
   &__cta {
     display: flex;
     margin: var(--theme-spacing--1) auto;

@@ -3,7 +3,7 @@ title = 'Coming Soon'
 description = 'ITP tracks are coming soon...'
 layout = 'module'
 emoji= '👷🏽‍♀️'
-menu = "from itp"
+menu = "jobs after itp"
 +++
 
 ## In development:
