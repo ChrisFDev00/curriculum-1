@@ -4,6 +4,6 @@ description = 'Explore frameworks, libraries, and declarative programming with R
 prerequisites = ["ITP"]
 layout = 'module'
 emoji= '🪄'
-menu = 'self-study'
+track_kinds = ['self-study']
 weight='6'
 +++
