@@ -5,38 +5,38 @@
   {{ $taxonomy_to_map := .Params.taxonomy_to_map }}
 
   {{/* You can't ask for a taxonomy to be sorted by weight, so we need to get weights and iterate ourselves - see https://discourse.gohugo.io/t/list-custom-taxonomy-terms-in-a-specific-order-not-alphabetical/18145/5 */}}
-  {{ $trackKinds := $.Site.GetPage (printf "/%s" $taxonomy_to_map) }}
-  {{ range $trackKindPage := $trackKinds.Pages.ByWeight }}
-    {{ $trackKindTermName := $trackKindPage.Name }}
-    {{ $trackKindTitle := $trackKindPage.Params.Title }}
-    {{ $tracks := index (index site.Taxonomies $taxonomy_to_map) $trackKindTermName }}
+  {{ $taxonomy := $.Site.GetPage (printf "/%s" $taxonomy_to_map) }}
+  {{ range $termPage := $taxonomy.Pages.ByWeight }}
+    {{ $termName := $termPage.Name }}
+    {{ $termTitle := $termPage.Params.Title }}
+    {{ $values := index (index site.Taxonomies $taxonomy_to_map) $termName }}
     <section class="c-map__block">
       <h2 class="e-heading c-map__title">
-        {{ $trackKindTitle }}
+        {{ $termTitle }}
       </h2>
-      {{ $trackKindPage.Params.Description }}
+      {{ $termPage.Params.Description }}
 
+      {{ if $termPage.Params.details}}
       <dl>
-        <dt>When</dt>
-        <dd>{{ $trackKindPage.Params.When }}</dd>
-        {{ if $trackKindPage.Params.Eligibility }}
-          <dt>Who</dt>
-          <dd>{{ $trackKindPage.Params.Eligibility }}</dd>
-        {{ end}}
+        {{ range $details := $termPage.Params.details}}
+        <dt>{{ $details.name }}</dt>
+        <dd>{{ $details.value }}</dd>
+        {{ end }}
       </dl>
+      {{ end }}
       <ol class="c-map__timeline">
         {{/* Check if a menu for the current map section exists */}}
-        {{ if $tracks }}
+        {{ if $values }}
           {{/* Range over the items in the menu */}}
-          {{ range $iterator, $module := $tracks }}
+          {{ range $iterator, $value := $values }}
             <li
               class="c-map__stop"
-              style="--layer:{{ sub (len $tracks) (add $iterator 1) }}">
-              {{ partial "card.html" $module.Page }}
+              style="--layer:{{ sub (len $values) (add $iterator 1) }}">
+              {{ partial "card.html" $value.Page }}
             </li>
           {{ end }}
         {{ else }}
-          <li>No items found for {{ $trackKindTitle }}</li>
+          <li>No items found for {{ $termTitle }}</li>
         {{ end }}
       </ol>
     </section>
